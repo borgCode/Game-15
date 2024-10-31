@@ -7,9 +7,8 @@ public class FifteenGame extends JFrame {
     JPanel northPanel = new JPanel();
     GameLogic gameLogic;
     JButton[][] buttons;
+    JButton cheatButton;
     JLabel counter;
-
-
 
     FifteenGame(){
         gameLogic = new GameLogic();
@@ -56,6 +55,12 @@ public class FifteenGame extends JFrame {
         northPanel.setLayout(new FlowLayout());
         northPanel.add(newGameButton);
         northPanel.add(counter);
+        cheatButton = new JButton("Cheat");
+        cheatButton.addActionListener(e -> {
+                    gameLogic.startCheatMode();
+                    updateUI();
+                });
+        northPanel.add(cheatButton);
         add(northPanel, BorderLayout.NORTH);
         
 
@@ -83,6 +88,10 @@ public class FifteenGame extends JFrame {
         
         //Uppdatera counter
         counter.setText(String.valueOf(gameLogic.getMoveCounter()));
+        if (gameLogic.isGameWon()) {
+            System.out.println("Spel slut");
+            JOptionPane.showMessageDialog(this, "Grattis, du vann!");
+        }
     }
 
     public static void main(String[] args) {

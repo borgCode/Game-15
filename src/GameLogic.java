@@ -38,4 +38,23 @@ public class GameLogic {
     public int[][] getBoard() {
         return board;
     }
+
+    public void performeMove(String number) {
+        int numberInt = Integer.parseInt(number);
+        for (int row = 0; row < 4; row++) {
+            for (int colum = 0; colum < 4; colum++) {
+                if (board[row][colum] == numberInt) {
+                    swapWithZero(row, colum);
+            }
+        }
+        System.out.println(number);
+    }
 }
+
+    private void swapWithZero(int row, int colum) {
+        if (row > 0 && board[row - 1][colum] == 0) {
+            board[row - 1][colum] = board[row][colum];
+            board[row][colum] = 0;
+        }
+    }
+    }

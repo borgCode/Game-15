@@ -1,5 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
 
 public class FifteenGame extends JFrame {
 
@@ -24,6 +25,7 @@ public class FifteenGame extends JFrame {
                 } else {
                     numberButton.setText(String.valueOf(board[i][j]));
                 }
+                numberButton.addActionListener(l -> gameLogic.performeMove(numberButton.getText()));
                 boardPanel.add(numberButton);
             }
         }

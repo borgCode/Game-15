@@ -23,16 +23,67 @@ public class GameLogic {
             listOfNumbers.add(i);
         }
         
-        Collections.shuffle(listOfNumbers);
-
-        //TODO ifSolvable
-
         
-        //Lägg in sifforna från listan till 2D array
-        addNumbersToBoard(listOfNumbers);
-
+        startNewGame();
+        
     }
 
+    //https://www.geeksforgeeks.org/check-instance-15-puzzle-solvable/ 
+    // Algorithm för att se om det går att lösa pusslet.
+    private boolean isSolvable(int[][] listOfNumbers) {
+        // Count inversions in given puzzle
+        int[] arr = new int[size * size];
+        int k = 0;
+        for (int i = 0; i < size; i++)
+            for (int j = 0; j < size; j++)
+                arr[k++] = listOfNumbers[i][j];
+
+        int invCount = getInvCount(arr);
+
+        // If grid is odd, return true if inversion
+        // count is even.
+        if (size % 2 == 1)
+            return invCount % 2 == 0;
+        else // grid is even
+        {
+            int pos = findXPosition(listOfNumbers);
+            if (pos % 2 == 1)
+                return invCount % 2 == 0;
+            else
+                return invCount % 2 == 1;
+        }
+    }
+
+    // A utility function to count inversions in given
+    // array 'arr[]'. Note that this function can be
+    // optimized to work in O(n Log n) time. The idea
+    // here is to keep code small and simple.
+    private int getInvCount(int[] arr)
+    {
+        int inv_count = 0;
+        for (int i = 0; i < size * size - 1; i++) {
+            for (int j = i + 1; j < size * size; j++) {
+                // count pairs(arr[i], arr[j]) such that
+                // i < j but arr[i] > arr[j]
+                if (arr[j] != 0 && arr[i] != 0
+                        && arr[i] > arr[j])
+                    inv_count++;
+            }
+        }
+        return inv_count;
+    }
+
+    int findXPosition(int[][] puzzle)
+    {
+        // start from bottom-right corner of matrix
+        for (int i = size - 1; i >= 0; i--)
+            for (int j = size - 1; j >= 0; j--)
+                if (puzzle[i][j] == 0)
+                    return size - i;
+        return -1;
+    }
+
+   
     private void addNumbersToBoard(List<Integer> listOfNumbers) {
         board = new int[size][size];
         int index = 0;
@@ -96,11 +147,10 @@ public class GameLogic {
     }
 
     public void startNewGame() {
-        Collections.shuffle(listOfNumbers);
+        do {
+            Collections.shuffle(listOfNumbers);
+            addNumbersToBoard(listOfNumbers);
+        } while (!isSolvable(board));
 
-        //TODO ifSolvable
-        
-        //Lägg in sifforna från listan till 2D array
-        addNumbersToBoard(listOfNumbers);
     }
 }

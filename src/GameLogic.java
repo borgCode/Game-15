@@ -24,10 +24,31 @@ public class GameLogic {
             listOfNumbers.add(i);
         }
         
-
         startNewGame();
 
     }
+
+    public void startNewGame() {
+        moveCounter = 0;
+        do {
+            Collections.shuffle(listOfNumbers);
+            addNumbersToBoard(listOfNumbers);
+        } while (!isSolvable(board));
+
+    }
+
+    private void addNumbersToBoard(List<Integer> listOfNumbers) {
+        board = new int[size][size];
+        int index = 0;
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 4; j++) {
+                board[i][j] = listOfNumbers.get(index);
+                index++;
+            }
+        }
+    }
+
+
 
     //https://www.geeksforgeeks.org/check-instance-15-puzzle-solvable/
     // Algorithm för att se om det går att lösa pusslet.
@@ -84,25 +105,6 @@ public class GameLogic {
         return -1;
     }
 
-    private void addNumbersToBoard(List<Integer> listOfNumbers) {
-        board = new int[size][size];
-        int index = 0;
-        for (int i = 0; i < 4; i++) {
-            for (int j = 0; j < 4; j++) {
-                board[i][j] = listOfNumbers.get(index);
-                index++;
-            }
-        }
-    }
-
-    public int[][] getBoard() {
-        return board;
-    }
-
-    public int getMoveCounter() {
-        return moveCounter;
-    }
-
     public void performMove(String number) {
         //Leta efter siffran i 2D array
         int numberInt = Integer.parseInt(number);
@@ -150,15 +152,6 @@ public class GameLogic {
         }
     }
 
-    public void startNewGame() {
-        moveCounter = 0;
-        do {
-            Collections.shuffle(listOfNumbers);
-            addNumbersToBoard(listOfNumbers);
-        } while (!isSolvable(board));
-
-    }
-
     private void checkIfGameIsWon() {
         
         int number = 1;
@@ -177,14 +170,6 @@ public class GameLogic {
         }
     }
 
-    public boolean isGameWon() {
-        return isGameWon;
-    }
-
-    public void setGameWon(boolean gameWon) {
-        isGameWon = gameWon;
-    }
-
     public void startCheatMode() {
         int number = 1;
         for (int row = 0; row < 4; row++) {
@@ -200,6 +185,23 @@ public class GameLogic {
                 }
             }
         }
+        
 
+    }
+
+    public int[][] getBoard() {
+        return board;
+    }
+
+    public int getMoveCounter() {
+        return moveCounter;
+    }
+
+    public boolean isGameWon() {
+        return isGameWon;
+    }
+
+    public void setGameWon(boolean gameWon) {
+        isGameWon = gameWon;
     }
 }

@@ -5,51 +5,70 @@ public class FifteenGame extends JFrame {
 
     JPanel boardPanel = new JPanel();
     JPanel northPanel = new JPanel();
-
+    GameLogic gameLogic;
     JButton[][] buttons;
+    JLabel counter;
 
 
 
     FifteenGame(){
-        GameLogic gameLogic = new GameLogic();
+        gameLogic = new GameLogic();
         int[][] board = gameLogic.getBoard();
-        buttons = new JButton[board.length][board.length];
+
         setLayout(new BorderLayout());
-        add(boardPanel, BorderLayout.CENTER);
+        
+        //Initiera button array
+        buttons = new JButton[board.length][board.length];
         boardPanel.setLayout(new GridLayout(4,4));
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 4; j++) {
+                
+                //Settar int array värden till buttons
                 buttons[i][j] = new JButton();
                 JButton tempButton = buttons[i][j];
+                
+                //Om värdet är noll skriv ingen text
                 if (board[i][j] == 0) {
                     tempButton.setText("");
                     tempButton.setEnabled(false);
                 } else {
                     tempButton.setText(String.valueOf(board[i][j]));
                 }
+                
+                //Lägg till actionlistener på varje button
                 buttons[i][j].addActionListener(e -> {
                     gameLogic.performMove(tempButton.getText());
-                    updateUI(board);
+                    updateUI();
                 });
                 boardPanel.add(buttons[i][j]);
             }
         }
-
-        JButton NewGameButton = new JButton("New Game");
-        JLabel counter = new JLabel("0");
-
-        add(northPanel, BorderLayout.NORTH);
+        add(boardPanel, BorderLayout.CENTER);
+        
+        //Skapa new game button och counter som läggs till i North
+        JButton newGameButton = new JButton("New Game");
+        newGameButton.addActionListener(e -> {
+            gameLogic.startNewGame();
+            updateUI();
+        });
+        
+        counter = new JLabel("0");
         northPanel.setLayout(new FlowLayout());
-        northPanel.add(NewGameButton);
+        northPanel.add(newGameButton);
         northPanel.add(counter);
+        add(northPanel, BorderLayout.NORTH);
+        
 
         setVisible(true);
         setSize(400, 400);
-        //pack();
+        setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
-    private void updateUI(int[][] board) {
+    private void updateUI() {
+        int[][] board = gameLogic.getBoard();
+        
+        //Uppdatera GUI med nya värden efter flytt
         for (int i = 0; i < buttons.length; i++) {
             for (int j = 0; j < buttons.length; j++) {
                 if (board[i][j] == 0) {
@@ -61,6 +80,9 @@ public class FifteenGame extends JFrame {
                 }
             }
         }
+        
+        //Uppdatera counter
+        counter.setText(String.valueOf(gameLogic.getMoveCounter()));
     }
 
     public static void main(String[] args) {

@@ -29,7 +29,10 @@ public class GameLogic {
     }
 
     public void startNewGame() {
+        //Set move till 0 varje gång spelet startar
         moveCounter = 0;
+        
+        //Shuffle och lägg till i 2d array innan vi kollar om den går att lösa i while loopen
         do {
             Collections.shuffle(listOfNumbers);
             addNumbersToBoard(listOfNumbers);
@@ -95,7 +98,7 @@ public class GameLogic {
         return inv_count;
     }
 
-    int findXPosition(int[][] puzzle)
+    private int findXPosition(int[][] puzzle)
     {
         // start from bottom-right corner of matrix
         for (int i = size - 1; i >= 0; i--)
@@ -154,6 +157,7 @@ public class GameLogic {
 
     private void checkIfGameIsWon() {
         
+        //Metod som kollar om sifforna står i rätt ordning 1-15, loopen avslutas när nummer är 15
         int number = 1;
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 4; j++) {

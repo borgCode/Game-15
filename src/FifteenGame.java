@@ -97,6 +97,8 @@ public class FifteenGame extends JFrame {
         if (gameLogic.isGameWon()) {
             JOptionPane.showMessageDialog(this, "Grattis, du vann!");
             gameLogic.startNewGame();
+
+            //Set game won till false innan updateUI kallas igen
             gameLogic.setGameWon(false);
             updateUI();
         }

@@ -60,6 +60,8 @@ public class FifteenGame extends JFrame {
                     gameLogic.startCheatMode();
                     updateUI();
                 });
+        
+        
         northPanel.add(cheatButton);
         add(northPanel, BorderLayout.NORTH);
         
@@ -88,9 +90,12 @@ public class FifteenGame extends JFrame {
         
         //Uppdatera counter
         counter.setText(String.valueOf(gameLogic.getMoveCounter()));
+        
         if (gameLogic.isGameWon()) {
-            System.out.println("Spel slut");
             JOptionPane.showMessageDialog(this, "Grattis, du vann!");
+            gameLogic.startNewGame();
+            gameLogic.setGameWon(false);
+            updateUI();
         }
     }
 

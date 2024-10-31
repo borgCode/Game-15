@@ -28,7 +28,7 @@ public class FifteenGame extends JFrame {
                     tempButton.setText(String.valueOf(board[i][j]));
                 }
                 buttons[i][j].addActionListener(e -> {
-                    gameLogic.performeMove(tempButton.getText());
+                    gameLogic.performMove(tempButton.getText());
                     updateUI(board);
                 });
                 boardPanel.add(buttons[i][j]);

@@ -11,6 +11,8 @@ public class GameLogic {
         initBoard();
     }
 
+    
+
     private void initBoard() {
         
         List<Integer> listOfNumbers = new ArrayList<>();
@@ -30,7 +32,10 @@ public class GameLogic {
                 index++;
             }
         }
-
         
+    }
+
+    public int[][] getBoard() {
+        return board;
     }
 }

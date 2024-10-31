@@ -10,13 +10,22 @@ public class FifteenGame extends JFrame {
 
     FifteenGame(){
         GameLogic gameLogic = new GameLogic();
+        int[][] board = gameLogic.getBoard();
 
         setLayout(new BorderLayout());
         add(boardPanel, BorderLayout.CENTER);
         boardPanel.setLayout(new GridLayout(4,4));
-        int index = 0;
-        for (int i = 0; i < 16; i++) {
-            boardPanel.add(new JButton("test"));
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 4; j++) {
+                JButton numberButton = new JButton();
+                if (board[i][j] == 0) {
+                    numberButton.setText("");
+                    numberButton.setEnabled(false);
+                } else {
+                    numberButton.setText(String.valueOf(board[i][j]));
+                }
+                boardPanel.add(numberButton);
+            }
         }
 
         JButton NewGameButton = new JButton("New Game");

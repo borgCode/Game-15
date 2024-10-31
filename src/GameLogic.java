@@ -125,7 +125,6 @@ public class GameLogic {
 
     private void swapWithZero(int row, int colum) {
         //kollar övre
-        System.out.println("Kollar metoden");
         if (row > 0 && board[row - 1][colum] == 0) {
             board[row - 1][colum] = board[row][colum];
             board[row][colum] = 0;

@@ -43,26 +43,29 @@ public class FifteenGame extends JFrame {
             }
         }
         add(boardPanel, BorderLayout.CENTER);
-        
+
+        northPanel.setLayout(new FlowLayout());
+
         //Skapa new game button och counter som läggs till i North
         JButton newGameButton = new JButton("New Game");
         newGameButton.addActionListener(e -> {
             gameLogic.startNewGame();
             updateUI();
         });
-        
-        counter = new JLabel("0");
-        northPanel.setLayout(new FlowLayout());
         northPanel.add(newGameButton);
-        northPanel.add(counter);
+
         cheatButton = new JButton("Cheat");
         cheatButton.addActionListener(e -> {
                     gameLogic.startCheatMode();
                     updateUI();
                 });
-        
-        
         northPanel.add(cheatButton);
+
+        JLabel movesLabel = new JLabel("Moves: ");
+        northPanel.add(movesLabel);
+
+        counter = new JLabel("0");
+        northPanel.add(counter);
         add(northPanel, BorderLayout.NORTH);
         
 
